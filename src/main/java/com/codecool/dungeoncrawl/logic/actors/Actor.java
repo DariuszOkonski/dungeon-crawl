@@ -22,15 +22,23 @@ public abstract class Actor implements Drawable {
             return;
         }
 
-        System.out.println("NextCell: " + nextCell);
-        System.out.println(nextCell.getTileName());
+        //TODO - drop comments
+//        System.out.println("NextCell: " + nextCell);
+//        System.out.println(nextCell.getTileName());
 
         if(nextCell.getTileName() == CellType.WALL.getTileName())
             return;
 
-        cell.setActor(null);
-        nextCell.setActor(this);
-        cell = nextCell;
+        if((nextCell.getTileName() == CellType.FLOOR.getTileName())
+                &&(nextCell.getActor() == null)) {
+            cell.setActor(null);
+            nextCell.setActor(this);
+            cell = nextCell;
+            return;
+        }
+
+        //TODO - fight with enemy or collect some items
+//        System.out.println("============> fight with enemy or collect some items");
     }
 
     public int getHealth() {
