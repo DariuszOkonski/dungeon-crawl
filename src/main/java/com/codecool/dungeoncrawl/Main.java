@@ -4,24 +4,31 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+    private final int FONT_SIZE = 24;
+
     GameMap map = MapLoader.loadMap();
     Canvas canvas = new Canvas(
             map.getWidth() * Tiles.TILE_WIDTH,
             map.getHeight() * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label healthLabel = new Label();
+    Button pickUpItemButton = new Button();
 
     public static void main(String[] args) {
         launch(args);
@@ -33,8 +40,25 @@ public class Main extends Application {
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
 
-        ui.add(new Label("Health: "), 0, 0);
+        Label healthText = new Label("Health: ");
+        healthText.setFont(new Font(FONT_SIZE));
+
+        ui.add(healthText, 0, 0);
+        healthLabel.setFont(new Font(FONT_SIZE));
         ui.add(healthLabel, 1, 0);
+
+        pickUpItemButton.setDisable(true);
+        pickUpItemButton.setText("Pick Up Item");
+
+        pickUpItemButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                map.getPlayer().addToInventory();
+            }
+        });
+
+        ui.add(pickUpItemButton, 0, 2);
+        map.getPlayer().addPickuButton(pickUpItemButton);
 
         BorderPane borderPane = new BorderPane();
 
@@ -51,20 +75,21 @@ public class Main extends Application {
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
+//        System.out.println(keyEvent.getCode());
         switch (keyEvent.getCode()) {
-            case UP:
+            case W:
                 map.getPlayer().move(0, -1);
                 refresh();
                 break;
-            case DOWN:
+            case S:
                 map.getPlayer().move(0, 1);
                 refresh();
                 break;
-            case LEFT:
+            case A:
                 map.getPlayer().move(-1, 0);
                 refresh();
                 break;
-            case RIGHT:
+            case D:
                 map.getPlayer().move(1,0);
                 refresh();
                 break;
