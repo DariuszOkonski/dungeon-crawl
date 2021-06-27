@@ -54,11 +54,13 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
                 map.getPlayer().addToInventory();
+                System.out.println(map.getPlayer().getInventoryList());
             }
         });
 
         ui.add(pickUpItemButton, 0, 2);
         map.getPlayer().addPickuButton(pickUpItemButton);
+
 
         BorderPane borderPane = new BorderPane();
 

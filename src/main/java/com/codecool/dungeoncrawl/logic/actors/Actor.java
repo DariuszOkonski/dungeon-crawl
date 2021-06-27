@@ -36,18 +36,7 @@ public abstract class Actor implements Drawable {
 
         movingAroundTheBoardOnTheFloor(nextCell);
 
-        // collect an item logic
-        if(nextCell.getActor() instanceof ICollectable) {
-            tempInventoryItem = nextCell.getActor();
-            this.pickUpItemButton.setDisable(false);
-
-            System.out.println("Collect item?");
-
-            cell.setActor(null);
-            nextCell.setActor(this);
-            cell = nextCell;
-        }
-
+        isItemToCollect(nextCell);
 
         if(nextCell.getActor() instanceof IFightable) {
             //TODO - fight with enemy or collect some items
@@ -64,12 +53,38 @@ public abstract class Actor implements Drawable {
         return cell;
     }
 
+    public List<ICollectable> getInventoryList() {
+        return inventoryList;
+    }
+
     public int getX() {
         return cell.getX();
     }
 
     public int getY() {
         return cell.getY();
+    }
+
+    public void addPickuButton(Button pickUpItem) {
+        this.pickUpItemButton = pickUpItem;
+    }
+
+    public void addToInventory() {
+        this.inventoryList.add((ICollectable) tempInventoryItem);
+        tempInventoryItem = null;
+        this.pickUpItemButton.setDisable(true);
+    }
+
+    private void isItemToCollect(Cell nextCell) {
+        if(nextCell.getActor() instanceof ICollectable) {
+            tempInventoryItem = nextCell.getActor();
+            this.pickUpItemButton.setDisable(false);
+            cell.setActor(null);
+            nextCell.setActor(this);
+            cell = nextCell;
+
+            // addToInventory method is called from Main to add item to inventory list
+        }
     }
 
     private void movingAroundTheBoardOnTheFloor(Cell nextCell) {
@@ -104,13 +119,6 @@ public abstract class Actor implements Drawable {
         return nextCell.getTileName() == CellType.WALL.getTileName();
     }
 
-    public void addToInventory() {
-        System.out.println("ADD TO INVENTORY");
-        this.inventoryList.add((ICollectable) tempInventoryItem);
-        tempInventoryItem = null;
-        this.pickUpItemButton.setDisable(true);
-    }
-
     private Cell getNextCell(int dx, int dy) {
         try {
             Cell nextCell = cell.getNeighbor(dx, dy);
@@ -120,7 +128,4 @@ public abstract class Actor implements Drawable {
         }
     }
 
-    public void addPickuButton(Button pickUpItem) {
-        this.pickUpItemButton = pickUpItem;
-    }
 }
