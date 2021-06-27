@@ -10,10 +10,9 @@ import java.util.List;
 
 public abstract class Actor implements Drawable {
     private Cell cell;
-    private Actor tempInventoryItem;
+    protected Actor tempInventoryItem;
     private int health = 10;
-    private Button pickUpItemButton;
-    private final List<ICollectable> inventoryList = new ArrayList<>();
+    protected Button pickUpItemButton;
 
     public Actor(Cell cell) {
         this.cell = cell;
@@ -53,26 +52,12 @@ public abstract class Actor implements Drawable {
         return cell;
     }
 
-    public List<ICollectable> getInventoryList() {
-        return inventoryList;
-    }
-
     public int getX() {
         return cell.getX();
     }
 
     public int getY() {
         return cell.getY();
-    }
-
-    public void addPickuButton(Button pickUpItem) {
-        this.pickUpItemButton = pickUpItem;
-    }
-
-    public void addToInventory() {
-        this.inventoryList.add((ICollectable) tempInventoryItem);
-        tempInventoryItem = null;
-        this.pickUpItemButton.setDisable(true);
     }
 
     private void isItemToCollect(Cell nextCell) {
@@ -83,7 +68,7 @@ public abstract class Actor implements Drawable {
             nextCell.setActor(this);
             cell = nextCell;
 
-            // addToInventory method is called from Main to add item to inventory list
+            // addToInventory method is called from Main and is defined in Player class
         }
     }
 
