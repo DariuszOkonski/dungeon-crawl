@@ -25,12 +25,21 @@ public abstract class Actor implements Drawable {
         //TODO - drop comments
 //        System.out.println("NextCell: " + nextCell);
 //        System.out.println(nextCell.getTileName());
+//        System.out.println(nextCell.getActor());
+//        System.out.println(nextCell.getActor() instanceof Sword);
+//        System.out.println(nextCell.getActor() instanceof Key);
 
         if(nextCell.getTileName() == CellType.WALL.getTileName())
             return;
 
         if((nextCell.getTileName() == CellType.FLOOR.getTileName())
-                &&(nextCell.getActor() == null)) {
+                &&((nextCell.getActor() == null)
+                || (nextCell.getActor() instanceof Sword)
+                || (nextCell.getActor() instanceof Key)))
+        {
+            //TODO - add to inventory
+            addToInventory(nextCell);
+
             cell.setActor(null);
             nextCell.setActor(this);
             cell = nextCell;
@@ -55,5 +64,12 @@ public abstract class Actor implements Drawable {
 
     public int getY() {
         return cell.getY();
+    }
+
+    private void addToInventory(Cell nextCell) {
+        if(nextCell.getActor() == null)
+            return;
+
+        System.out.println("ADD TO INVENTORY");
     }
 }
