@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.Drawable;
 
 public abstract class Actor implements Drawable {
@@ -22,6 +23,10 @@ public abstract class Actor implements Drawable {
         }
 
         System.out.println("NextCell: " + nextCell);
+        System.out.println(nextCell.getTileName());
+
+        if(nextCell.getTileName() == CellType.WALL.getTileName())
+            return;
 
         cell.setActor(null);
         nextCell.setActor(this);
