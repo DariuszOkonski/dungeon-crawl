@@ -20,7 +20,9 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    private final int FONT_SIZE = 24;
+    private final int FONT_SIZE_LARGE = 24;
+    private final int FONT_SIZE_MEDIUM = 20;
+    private final int FONT_SIZE_SMALL = 18;
 
     GameMap map = MapLoader.loadMap();
     Canvas canvas = new Canvas(
@@ -28,6 +30,7 @@ public class Main extends Application {
             map.getHeight() * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label healthLabel = new Label();
+    Label inventoryList = new Label();
     Button pickUpItemButton = new Button();
 
     public static void main(String[] args) {
@@ -41,10 +44,10 @@ public class Main extends Application {
         ui.setPadding(new Insets(10));
 
         Label healthText = new Label("Health: ");
-        healthText.setFont(new Font(FONT_SIZE));
+        healthText.setFont(new Font(FONT_SIZE_LARGE));
 
         ui.add(healthText, 0, 0);
-        healthLabel.setFont(new Font(FONT_SIZE));
+        healthLabel.setFont(new Font(FONT_SIZE_LARGE));
         ui.add(healthLabel, 1, 0);
 
         pickUpItemButton.setDisable(true);
@@ -54,13 +57,23 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
                 map.getPlayer().addToInventory();
-                System.out.println(map.getPlayer().getInventoryList());
+                var tempInventoryList = map.getPlayer().getInventoryList();
+
+                String tempInventoryItems = "";
+                for (var item: tempInventoryList) {
+                    tempInventoryItems += item.getTileName() + "\n";
+                }
+                inventoryList.setText(tempInventoryItems);
             }
         });
 
         ui.add(pickUpItemButton, 0, 2);
         map.getPlayer().addPickuButton(pickUpItemButton);
 
+        Label inventoryListText = new Label("Inventory List:");
+        inventoryListText.setFont(new Font(FONT_SIZE_SMALL));
+        ui.add(inventoryListText, 0, 3);
+        ui.add(inventoryList, 0, 4);
 
         BorderPane borderPane = new BorderPane();
 
