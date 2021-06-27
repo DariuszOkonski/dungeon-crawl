@@ -47,4 +47,15 @@ public class Cell implements Drawable {
     public int getY() {
         return y;
     }
+
+    @Override
+    public String toString() {
+        return "Cell{" +
+                "type=" + type +
+                ", actor=" + actor +
+                ", gameMap=" + gameMap +
+                ", x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }
