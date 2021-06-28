@@ -10,14 +10,11 @@ import java.util.List;
 
 public abstract class Actor implements Drawable {
     protected Cell cell;
-    protected Actor tempInventoryItem;
     protected int health = 0;
-    protected Button pickUpItemButton;
 
     public Actor(Cell cell) {
         this.cell = cell;
         this.cell.setActor(this);
-        this.tempInventoryItem = null;
     }
 
     public int getHealth() {

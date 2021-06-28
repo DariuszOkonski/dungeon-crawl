@@ -10,10 +10,13 @@ import java.util.List;
 
 public class Player extends Actor implements IMovable {
     private final List<ICollectable> inventoryList = new ArrayList<>();
+    private Button pickUpItemButton;
+    private Actor tempInventoryItem;
 
     public Player(Cell cell) {
         super(cell);
         health = Utilities.HERO_HEALTH;
+        this.tempInventoryItem = null;
     }
 
     public List<ICollectable> getInventoryList() {
@@ -53,6 +56,7 @@ public class Player extends Actor implements IMovable {
 
         if(nextCell.getActor() instanceof IFightable) {
             //TODO - fight with enemy or collect some items
+            System.out.println(nextCell.getActor());
             System.out.println("===========> fight");
         }
 
