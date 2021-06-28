@@ -46,6 +46,14 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             new Sword(cell);
                             break;
+                        case 'I':
+                            cell.setType(CellType.FLOOR);
+                            new ClosedDoor(cell);
+                            break;
+                        case '/':
+                            cell.setType(CellType.FLOOR);
+                            new OpenedDoor(cell);
+                            break;
                         case '@':
                             cell.setType(CellType.FLOOR);
                             map.setPlayer(new Player(cell));

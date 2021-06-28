@@ -15,6 +15,7 @@ public class Player extends Actor implements IMovable {
     private final List<ICollectable> inventoryList = new ArrayList<>();
     private Button pickUpItemButton;
     private Actor tempInventoryItem;
+    private Actor tempOpenedDoor;
     private Label enemyHealthLabel;
     private Label enemyStrikePowerLabel;
     private boolean isUsingWeapon = false;
@@ -24,6 +25,7 @@ public class Player extends Actor implements IMovable {
         health = Utilities.HERO_HEALTH;
         strikePower = Utilities.HERO_STRIKE_POWER;
         this.tempInventoryItem = null;
+        this.tempOpenedDoor = null;
     }
 
     public List<ICollectable> getInventoryList() {
@@ -61,17 +63,22 @@ public class Player extends Actor implements IMovable {
 
         movingAroundTheBoardOnTheFloor(nextCell);
 
+        canGoThroughDoor(nextCell);
+
         isItemToCollect(nextCell);
 
         setEnemyLabels("-", "-");
 
         fightEnemy(nextCell);
 
+
+//        System.out.println(nextCell);
+//        System.out.println(nextCell.getActor() instanceof OpenedDoor);
+
     }
 
     private void fightEnemy(Cell nextCell) {
         if(nextCell.getActor() instanceof IFightable) {
-            //TODO - fight with enemy or collect some items
 //            System.out.println("===========> fight");
 
             var monster = (IFightable) nextCell.getActor();
@@ -130,7 +137,6 @@ public class Player extends Actor implements IMovable {
     }
 
     private void setEnemyLabels(String level, String strikePower) {
-
         this.enemyHealthLabel.setText(level);
         this.enemyStrikePowerLabel.setText(strikePower);
     }
@@ -148,6 +154,14 @@ public class Player extends Actor implements IMovable {
     }
 
     private void movingAroundTheBoardOnTheFloor(Cell nextCell) {
+        if(tempOpenedDoor != null) {
+            cell.setActor(tempOpenedDoor);
+            nextCell.setActor(this);
+            cell = nextCell;
+            tempOpenedDoor = null;
+            return;
+        }
+
         if((nextCell.getTileName() == CellType.FLOOR.getTileName())
                 &&(nextCell.getActor() == null))
         {
@@ -156,7 +170,50 @@ public class Player extends Actor implements IMovable {
             cell = nextCell;
 
             resetUsingWeapon();
+            return;
         }
+    }
+
+    private void canGoThroughDoor(Cell nextCell) {
+        if(nextCell.getActor() instanceof OpenedDoor) {
+            allowedToGoThroughDoor(nextCell);
+            return;
+        }
+
+        if(nextCell.getActor() instanceof ClosedDoor) {
+            System.out.println("CLOSED DOOR ===================");
+
+            for (var key: inventoryList) {
+                if (key instanceof Key) {
+                    inventoryList.remove(key);
+                    allowedToGoThroughDoor(nextCell);
+                    return;
+                }
+            }
+
+            noKeyInformation();
+            return;
+        }
+    }
+
+    private void noKeyInformation() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information");
+        alert.setHeaderText("NO KEY");
+        alert.setContentText("You have no key in your inventory to get through");
+        alert.showAndWait().ifPresent(rs -> {
+            if (rs == ButtonType.OK) {
+                System.out.println("No Key");
+            }
+        });
+    }
+
+    private void allowedToGoThroughDoor(Cell nextCell) {
+        tempOpenedDoor = new OpenedDoor(nextCell);
+
+        cell.setActor(null);
+        nextCell.setActor(this);
+        cell = nextCell;
     }
 
     private void heroStepOffItemWithoutCollecting(Cell nextCell) {

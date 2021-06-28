@@ -5,7 +5,7 @@ public class Utilities {
     public static final int FONT_SIZE_MEDIUM = 20;
     public static final int FONT_SIZE_SMALL = 14;
 
-    public static final int HERO_HEALTH = 70;
+    public static final int HERO_HEALTH = 100;
     public static final int HERO_STRIKE_POWER = 5;
     public static final int SKELETON_HEALTH = 12;
     public static final int SKELETON_STRIKE_POWER = 5;

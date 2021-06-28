@@ -66,13 +66,6 @@ public class Main extends Application {
             public void handle(ActionEvent event) {
                 map.getPlayer().addToInventory();
                 checkInventoryItems();
-//                var tempInventoryList = map.getPlayer().getInventoryList();
-//
-//                String tempInventoryItems = "";
-//                for (var item: tempInventoryList) {
-//                    tempInventoryItems += item.getTileName() + "\n";
-//                }
-//                inventoryList.setText(tempInventoryItems);
             }
         });
 
