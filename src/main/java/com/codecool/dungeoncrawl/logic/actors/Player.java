@@ -16,6 +16,7 @@ public class Player extends Actor implements IMovable {
     public Player(Cell cell) {
         super(cell);
         health = Utilities.HERO_HEALTH;
+        strikePower = Utilities.HERO_STRIKE_POWER;
         this.tempInventoryItem = null;
     }
 
@@ -56,8 +57,33 @@ public class Player extends Actor implements IMovable {
 
         if(nextCell.getActor() instanceof IFightable) {
             //TODO - fight with enemy or collect some items
-            System.out.println(nextCell.getActor());
             System.out.println("===========> fight");
+
+            var monster = (IFightable)nextCell.getActor();
+            System.out.println(monster);
+            System.out.println(this);
+
+            monster.subtractHealth(this.strikePower);
+            this.subtractHealthFromHero(Utilities.ENEMY_STRIKE_POWER);
+
+            if(monster.isCharacterKilled()){
+                System.out.println("Enemy is dead");
+                cell.setActor(null);
+                nextCell.setActor(this);
+                cell = nextCell;
+            }
+
+            if(this.isHeroKilled()) {
+                System.out.println("You are dead");
+                health = 0;
+                cell.setActor(null);
+            }
+
+            System.out.println("===========> after hit");
+            System.out.println(monster);
+            System.out.println(this);
+
+
         }
 
     }
@@ -110,4 +136,23 @@ public class Player extends Actor implements IMovable {
             return null;
         }
     }
+
+    private boolean isHeroKilled() {
+        return health <= 0;
+    }
+
+    private void subtractHealthFromHero(int strikePower) {
+        health -= strikePower;
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "health=" + health +
+                ", strikePower=" + strikePower +
+                ", inventoryList=" + inventoryList +
+                ", tempInventoryItem=" + tempInventoryItem +
+                '}';
+    }
+
 }

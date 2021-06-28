@@ -11,6 +11,12 @@ import java.util.List;
 public abstract class Actor implements Drawable {
     protected Cell cell;
     protected int health = 0;
+    protected int strikePower = 0;
+
+    public int getStrikePower() {
+        return strikePower;
+    }
+
 
     public Actor(Cell cell) {
         this.cell = cell;

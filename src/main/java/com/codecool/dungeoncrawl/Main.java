@@ -91,6 +91,9 @@ public class Main extends Application {
 
     private void onKeyPressed(KeyEvent keyEvent) {
 //        System.out.println(keyEvent.getCode());
+        if(map.getPlayer() == null)
+            return;
+
         switch (keyEvent.getCode()) {
             case W:
                 map.getPlayer().move(0, -1);
@@ -109,6 +112,15 @@ public class Main extends Application {
                 refresh();
                 break;
         }
+
+        if(isEndGame()) {
+            map.setPlayer(null);
+            System.out.println("=== GAME OVER ===");
+        }
+    }
+
+    private boolean isEndGame() {
+        return map.getPlayer().getHealth() <= 0;
     }
 
     private void refresh() {
