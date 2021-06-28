@@ -35,6 +35,8 @@ public class Main extends Application {
             map.getHeight() * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label healthLabel = new Label();
+    Label strikePowerLabel = new Label();
+    Label enemyHealthLabel = new Label("-");
     Label inventoryList = new Label();
     Button pickUpItemButton = new Button();
 
@@ -62,24 +64,43 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
                 map.getPlayer().addToInventory();
-                var tempInventoryList = map.getPlayer().getInventoryList();
-
-                String tempInventoryItems = "";
-                for (var item: tempInventoryList) {
-                    tempInventoryItems += item.getTileName() + "\n";
-                }
-                inventoryList.setText(tempInventoryItems);
+                checkInventoryItems();
+//                var tempInventoryList = map.getPlayer().getInventoryList();
+//
+//                String tempInventoryItems = "";
+//                for (var item: tempInventoryList) {
+//                    tempInventoryItems += item.getTileName() + "\n";
+//                }
+//                inventoryList.setText(tempInventoryItems);
             }
         });
 
-        ui.add(pickUpItemButton, 0, 2);
-        map.getPlayer().addPickUpButton(pickUpItemButton);
+        Label strikePowerText = new Label("Strike Power: ");
+        strikePowerText.setFont(new Font(Utilities.FONT_SIZE_SMALL));
+        ui.add(strikePowerText, 0 , 2);
+
+        strikePowerLabel.setText(getPlayerStrikePower());
+        strikePowerLabel.setFont(new Font(Utilities.FONT_SIZE_SMALL));
+        ui.add(strikePowerLabel, 1, 2);
+
+        ui.add(pickUpItemButton, 0, 3);
 
         Label inventoryListText = new Label("Inventory List:");
         inventoryListText.setFont(new Font(Utilities.FONT_SIZE_SMALL));
-        ui.add(inventoryListText, 0, 3);
-        ui.add(inventoryList, 0, 4);
 
+        Label enemyHealthText = new Label("Enemy Health: ");
+        enemyHealthText.setFont(new Font(Utilities.FONT_SIZE_SMALL));
+
+        ui.add(enemyHealthText, 0, 4);
+        enemyHealthLabel.setFont(new Font(Utilities.FONT_SIZE_SMALL));
+        ui.add(enemyHealthLabel, 1, 4);
+
+
+
+        ui.add(inventoryListText, 0, 5);
+        ui.add(inventoryList, 0, 6);
+
+        map.getPlayer().addPickUpButton(pickUpItemButton, enemyHealthLabel);
         BorderPane borderPane = new BorderPane();
 
         borderPane.setCenter(canvas);
@@ -119,21 +140,21 @@ public class Main extends Application {
         }
 
         if(isEndGame()) {
-            map.setPlayer(null);
-            System.out.println("=== GAME OVER ===");
-
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Information");
-            alert.setHeaderText("=== GAME OVER ===");
-            alert.setContentText("You have lost this game");
-            alert.showAndWait().ifPresent(rs -> {
-                if (rs == ButtonType.OK) {
-                    System.out.println("Pressed OK.");
-                    System.exit(0);
-                }
-            });
-
+            endGame();
         }
+    }
+
+    private void endGame() {
+        map.setPlayer(null);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information");
+        alert.setHeaderText("GAME OVER");
+        alert.setContentText("You have lost this game");
+        alert.showAndWait().ifPresent(rs -> {
+            if (rs == ButtonType.OK) {
+                System.exit(0);
+            }
+        });
     }
 
     private boolean isEndGame() {
@@ -154,5 +175,21 @@ public class Main extends Application {
             }
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
+        checkInventoryItems();
+        strikePowerLabel.setText(getPlayerStrikePower());
+    }
+
+    private String getPlayerStrikePower() {
+        return Integer.toString(map.getPlayer().getStrikePower());
+    }
+
+    private void checkInventoryItems() {
+        var tempInventoryList = map.getPlayer().getInventoryList();
+
+        String tempInventoryItems = "";
+        for (var item: tempInventoryList) {
+            tempInventoryItems += item.getTileName() + "\n";
+        }
+        inventoryList.setText(tempInventoryItems);
     }
 }

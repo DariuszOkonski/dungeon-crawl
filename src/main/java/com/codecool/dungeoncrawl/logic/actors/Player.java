@@ -3,7 +3,10 @@ package com.codecool.dungeoncrawl.logic.actors;
 import com.codecool.dungeoncrawl.Utilities;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +15,8 @@ public class Player extends Actor implements IMovable {
     private final List<ICollectable> inventoryList = new ArrayList<>();
     private Button pickUpItemButton;
     private Actor tempInventoryItem;
+    private Label enemyHealthLabel;
+    private boolean isUsingWeapon = false;
 
     public Player(Cell cell) {
         super(cell);
@@ -30,8 +35,9 @@ public class Player extends Actor implements IMovable {
         this.pickUpItemButton.setDisable(true);
     }
 
-    public void addPickUpButton(Button pickUpItem) {
+    public void addPickUpButton(Button pickUpItem, Label enemyHealthLabel) {
         this.pickUpItemButton = pickUpItem;
+        this.enemyHealthLabel = enemyHealthLabel;
     }
 
     public String getTileName() {
@@ -55,37 +61,74 @@ public class Player extends Actor implements IMovable {
 
         isItemToCollect(nextCell);
 
+        setEnemyHealthLabel("-");
+
+        fightEnemy(nextCell);
+
+    }
+
+    private void fightEnemy(Cell nextCell) {
         if(nextCell.getActor() instanceof IFightable) {
             //TODO - fight with enemy or collect some items
-            System.out.println("===========> fight");
+//            System.out.println("===========> fight");
 
-            var monster = (IFightable)nextCell.getActor();
-            System.out.println(monster);
-            System.out.println(this);
+            var monster = (IFightable) nextCell.getActor();
+//            System.out.println(monster);
+//            System.out.println(this);
+
+            for (var sword: inventoryList) {
+                if(sword instanceof Sword && !isUsingWeapon) {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Information");
+                    alert.setHeaderText("Use Weapon");
+                    alert.setContentText("You have strong sword, do you want to use it?");
+                    alert.showAndWait().ifPresent(rs -> {
+                        if (rs == ButtonType.OK) {
+                            strikePower = Utilities.SWORD_STRIKE_POWER;
+                            inventoryList.remove(sword);
+                            isUsingWeapon = true;
+                        }
+                    });
+                    break;
+                }
+            }
 
             monster.subtractHealth(this.strikePower);
             this.subtractHealthFromHero(Utilities.ENEMY_STRIKE_POWER);
+            setEnemyHealthLabel(Integer.toString(monster.getHealth()));
 
             if(monster.isCharacterKilled()){
-                System.out.println("Enemy is dead");
+//                System.out.println("Enemy is dead");
+                setEnemyHealthLabel("0");
                 cell.setActor(null);
                 nextCell.setActor(this);
                 cell = nextCell;
+
+                resetUsingWeapon();
             }
 
             if(this.isHeroKilled()) {
-                System.out.println("You are dead");
+//                System.out.println("You are dead");
                 health = 0;
                 cell.setActor(null);
             }
 
-            System.out.println("===========> after hit");
-            System.out.println(monster);
-            System.out.println(this);
+
+//            System.out.println("===========> after hit");
+//            System.out.println(monster);
+//            System.out.println(this);
 
 
         }
+    }
 
+    private void resetUsingWeapon() {
+        isUsingWeapon = false;
+        strikePower = Utilities.HERO_STRIKE_POWER;
+    }
+
+    private void setEnemyHealthLabel(String level) {
+        this.enemyHealthLabel.setText(level);
     }
 
     private void isItemToCollect(Cell nextCell) {
@@ -107,6 +150,8 @@ public class Player extends Actor implements IMovable {
             cell.setActor(null);
             nextCell.setActor(this);
             cell = nextCell;
+
+            resetUsingWeapon();
         }
     }
 
