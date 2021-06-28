@@ -7,7 +7,7 @@ import javafx.scene.control.Button;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player extends Actor implements IMoveable {
+public class Player extends Actor implements IMovable {
     private final List<ICollectable> inventoryList = new ArrayList<>();
 
     public Player(Cell cell) {
