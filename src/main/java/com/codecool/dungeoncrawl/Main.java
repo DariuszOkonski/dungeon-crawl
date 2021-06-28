@@ -37,6 +37,7 @@ public class Main extends Application {
     Label healthLabel = new Label();
     Label strikePowerLabel = new Label();
     Label enemyHealthLabel = new Label("-");
+    Label enemyStrikePowerLabel = new Label("-");
     Label inventoryList = new Label();
     Button pickUpItemButton = new Button();
 
@@ -75,7 +76,7 @@ public class Main extends Application {
             }
         });
 
-        Label strikePowerText = new Label("Strike Power: ");
+        Label strikePowerText = new Label("Hero Strike Power: ");
         strikePowerText.setFont(new Font(Utilities.FONT_SIZE_SMALL));
         ui.add(strikePowerText, 0 , 2);
 
@@ -95,12 +96,18 @@ public class Main extends Application {
         enemyHealthLabel.setFont(new Font(Utilities.FONT_SIZE_SMALL));
         ui.add(enemyHealthLabel, 1, 4);
 
+        Label enemyStrikePowerText = new Label("Enemy Strike Power: ");
+        enemyStrikePowerText.setFont(new Font(Utilities.FONT_SIZE_SMALL));
+        ui.add(enemyStrikePowerText, 0, 5);
+
+        enemyStrikePowerLabel.setFont(new Font(Utilities.FONT_SIZE_SMALL));
+        ui.add(enemyStrikePowerLabel, 1, 5);
 
 
-        ui.add(inventoryListText, 0, 5);
-        ui.add(inventoryList, 0, 6);
+        ui.add(inventoryListText, 0, 6);
+        ui.add(inventoryList, 0, 7);
 
-        map.getPlayer().addPickUpButton(pickUpItemButton, enemyHealthLabel);
+        map.getPlayer().addPickUpButton(pickUpItemButton, enemyHealthLabel, enemyStrikePowerLabel);
         BorderPane borderPane = new BorderPane();
 
         borderPane.setCenter(canvas);

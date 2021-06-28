@@ -32,5 +32,10 @@ public class Skeleton extends Actor implements IFightable {
     public void subtractHealth(int strikePower) {
         health -= strikePower;
     }
+
+    @Override
+    public int getMonsterStrikePower() {
+        return strikePower;
+    }
 }
 

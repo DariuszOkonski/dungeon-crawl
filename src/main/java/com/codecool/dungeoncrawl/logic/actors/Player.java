@@ -16,6 +16,7 @@ public class Player extends Actor implements IMovable {
     private Button pickUpItemButton;
     private Actor tempInventoryItem;
     private Label enemyHealthLabel;
+    private Label enemyStrikePowerLabel;
     private boolean isUsingWeapon = false;
 
     public Player(Cell cell) {
@@ -35,9 +36,10 @@ public class Player extends Actor implements IMovable {
         this.pickUpItemButton.setDisable(true);
     }
 
-    public void addPickUpButton(Button pickUpItem, Label enemyHealthLabel) {
+    public void addPickUpButton(Button pickUpItem, Label enemyHealthLabel, Label enemyStrikePowerLabel) {
         this.pickUpItemButton = pickUpItem;
         this.enemyHealthLabel = enemyHealthLabel;
+        this.enemyStrikePowerLabel = enemyStrikePowerLabel;
     }
 
     public String getTileName() {
@@ -61,7 +63,7 @@ public class Player extends Actor implements IMovable {
 
         isItemToCollect(nextCell);
 
-        setEnemyHealthLabel("-");
+        setEnemyLabels("-", "-");
 
         fightEnemy(nextCell);
 
@@ -94,12 +96,12 @@ public class Player extends Actor implements IMovable {
             }
 
             monster.subtractHealth(this.strikePower);
-            this.subtractHealthFromHero(Utilities.ENEMY_STRIKE_POWER);
-            setEnemyHealthLabel(Integer.toString(monster.getHealth()));
+            this.subtractHealthFromHero(monster.getMonsterStrikePower());
+            setEnemyLabels(Integer.toString(monster.getHealth()), Integer.toString(monster.getMonsterStrikePower()));
 
             if(monster.isCharacterKilled()){
 //                System.out.println("Enemy is dead");
-                setEnemyHealthLabel("0");
+                setEnemyLabels("0", "-");
                 cell.setActor(null);
                 nextCell.setActor(this);
                 cell = nextCell;
@@ -127,8 +129,10 @@ public class Player extends Actor implements IMovable {
         strikePower = Utilities.HERO_STRIKE_POWER;
     }
 
-    private void setEnemyHealthLabel(String level) {
+    private void setEnemyLabels(String level, String strikePower) {
+
         this.enemyHealthLabel.setText(level);
+        this.enemyStrikePowerLabel.setText(strikePower);
     }
 
     private void isItemToCollect(Cell nextCell) {

@@ -4,4 +4,5 @@ public interface IFightable {
     boolean isCharacterKilled();
     void subtractHealth(int strikePower);
     int getHealth();
+    int getMonsterStrikePower();
 }
