@@ -68,7 +68,7 @@ public class Main extends Application {
         });
 
         ui.add(pickUpItemButton, 0, 2);
-        map.getPlayer().addPickuButton(pickUpItemButton);
+        map.getPlayer().addPickUpButton(pickUpItemButton);
 
         Label inventoryListText = new Label("Inventory List:");
         inventoryListText.setFont(new Font(FONT_SIZE_SMALL));

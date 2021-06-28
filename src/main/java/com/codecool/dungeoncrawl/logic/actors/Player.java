@@ -24,7 +24,7 @@ public class Player extends Actor implements IMovable {
         this.pickUpItemButton.setDisable(true);
     }
 
-    public void addPickuButton(Button pickUpItem) {
+    public void addPickUpButton(Button pickUpItem) {
         this.pickUpItemButton = pickUpItem;
     }
 
