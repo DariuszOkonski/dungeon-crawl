@@ -53,6 +53,7 @@ public class Main extends Application {
 
         Label healthText = new Label("Health: ");
         healthText.setFont(new Font(Utilities.FONT_SIZE_LARGE));
+        healthText.setTextFill(Color.GREEN);
 
         ui.add(healthText, 0, 0);
         healthLabel.setFont(new Font(Utilities.FONT_SIZE_LARGE));
@@ -71,6 +72,7 @@ public class Main extends Application {
 
         Label strikePowerText = new Label("Hero Strike Power: ");
         strikePowerText.setFont(new Font(Utilities.FONT_SIZE_SMALL));
+        strikePowerText.setTextFill(Color.GREEN);
         ui.add(strikePowerText, 0 , 2);
 
         strikePowerLabel.setText(getPlayerStrikePower());
@@ -80,10 +82,12 @@ public class Main extends Application {
         ui.add(pickUpItemButton, 0, 3);
 
         Label inventoryListText = new Label("Inventory List:");
-        inventoryListText.setFont(new Font(Utilities.FONT_SIZE_SMALL));
+        inventoryListText.setFont(new Font(Utilities.FONT_SIZE_MEDIUM));
+        inventoryListText.setTextFill(Color.GREEN);
 
         Label enemyHealthText = new Label("Enemy Health: ");
         enemyHealthText.setFont(new Font(Utilities.FONT_SIZE_SMALL));
+        enemyHealthText.setTextFill(Color.RED);
 
         ui.add(enemyHealthText, 0, 4);
         enemyHealthLabel.setFont(new Font(Utilities.FONT_SIZE_SMALL));
@@ -91,6 +95,7 @@ public class Main extends Application {
 
         Label enemyStrikePowerText = new Label("Enemy Strike Power: ");
         enemyStrikePowerText.setFont(new Font(Utilities.FONT_SIZE_SMALL));
+        enemyStrikePowerText.setTextFill(Color.RED);
         ui.add(enemyStrikePowerText, 0, 5);
 
         enemyStrikePowerLabel.setFont(new Font(Utilities.FONT_SIZE_SMALL));
