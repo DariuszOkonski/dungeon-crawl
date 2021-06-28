@@ -11,7 +11,7 @@ import java.util.List;
 public abstract class Actor implements Drawable {
     protected Cell cell;
     protected Actor tempInventoryItem;
-    private int health = 10;
+    protected int health = 0;
     protected Button pickUpItemButton;
 
     public Actor(Cell cell) {

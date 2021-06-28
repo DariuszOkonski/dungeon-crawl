@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
+import com.codecool.dungeoncrawl.Utilities;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import javafx.scene.control.Button;
@@ -12,6 +13,7 @@ public class Player extends Actor implements IMovable {
 
     public Player(Cell cell) {
         super(cell);
+        health = Utilities.HERO_HEALTH;
     }
 
     public List<ICollectable> getInventoryList() {

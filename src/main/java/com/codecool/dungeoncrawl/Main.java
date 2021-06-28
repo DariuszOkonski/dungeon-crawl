@@ -20,9 +20,9 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    private final int FONT_SIZE_LARGE = 24;
-    private final int FONT_SIZE_MEDIUM = 20;
-    private final int FONT_SIZE_SMALL = 18;
+//    private final int FONT_SIZE_LARGE = 24;
+//    private final int FONT_SIZE_MEDIUM = 20;
+//    private final int FONT_SIZE_SMALL = 18;
 
     GameMap map = MapLoader.loadMap();
     Canvas canvas = new Canvas(
@@ -44,10 +44,10 @@ public class Main extends Application {
         ui.setPadding(new Insets(10));
 
         Label healthText = new Label("Health: ");
-        healthText.setFont(new Font(FONT_SIZE_LARGE));
+        healthText.setFont(new Font(Utilities.FONT_SIZE_LARGE));
 
         ui.add(healthText, 0, 0);
-        healthLabel.setFont(new Font(FONT_SIZE_LARGE));
+        healthLabel.setFont(new Font(Utilities.FONT_SIZE_LARGE));
         ui.add(healthLabel, 1, 0);
 
         pickUpItemButton.setDisable(true);
@@ -71,7 +71,7 @@ public class Main extends Application {
         map.getPlayer().addPickUpButton(pickUpItemButton);
 
         Label inventoryListText = new Label("Inventory List:");
-        inventoryListText.setFont(new Font(FONT_SIZE_SMALL));
+        inventoryListText.setFont(new Font(Utilities.FONT_SIZE_SMALL));
         ui.add(inventoryListText, 0, 3);
         ui.add(inventoryList, 0, 4);
 
