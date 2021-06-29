@@ -5,4 +5,8 @@ public interface IFightable {
     void subtractHealth(int strikePower);
     int getHealth();
     int getMonsterStrikePower();
+
+    boolean getIsFighting();
+    void setFighting();
+    void setNotFighting();
 }

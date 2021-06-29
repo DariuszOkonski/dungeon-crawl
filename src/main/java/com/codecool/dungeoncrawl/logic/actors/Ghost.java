@@ -3,7 +3,8 @@ package com.codecool.dungeoncrawl.logic.actors;
 import com.codecool.dungeoncrawl.Utilities;
 import com.codecool.dungeoncrawl.logic.Cell;
 
-public class Ghost extends Actor implements IFightable {
+public class Ghost extends Actor implements IFightable, IMovable {
+    private boolean isFighting = false;
 
     public Ghost(Cell cell) {
         super(cell);
@@ -37,6 +38,26 @@ public class Ghost extends Actor implements IFightable {
     @Override
     public int getMonsterStrikePower() {
         return strikePower;
+    }
+
+    @Override
+    public boolean getIsFighting() {
+        return isFighting;
+    }
+
+    @Override
+    public void setFighting() {
+        isFighting = true;
+    }
+
+    @Override
+    public void setNotFighting() {
+        isFighting = false;
+    }
+
+    @Override
+    public void move(int dx, int dy) {
+        System.out.println("GHOST IS MOVING");
     }
 }
 

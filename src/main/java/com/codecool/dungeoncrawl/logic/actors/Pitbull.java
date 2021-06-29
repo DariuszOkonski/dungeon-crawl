@@ -3,7 +3,9 @@ package com.codecool.dungeoncrawl.logic.actors;
 import com.codecool.dungeoncrawl.Utilities;
 import com.codecool.dungeoncrawl.logic.Cell;
 
-public class Pitbull extends Actor implements IFightable {
+public class Pitbull extends Actor implements IFightable, IMovable {
+    private boolean isFighting = false;
+
     public Pitbull(Cell cell) {
         super(cell);
         health = Utilities.PITBULL_HEALTH;
@@ -28,5 +30,25 @@ public class Pitbull extends Actor implements IFightable {
     @Override
     public int getMonsterStrikePower() {
         return strikePower;
+    }
+
+    @Override
+    public boolean getIsFighting() {
+        return isFighting;
+    }
+
+    @Override
+    public void setFighting() {
+        isFighting = true;
+    }
+
+    @Override
+    public void setNotFighting() {
+        isFighting = false;
+    }
+
+    @Override
+    public void move(int dx, int dy) {
+        System.out.println("PITBULL IS MOVING ============");
     }
 }

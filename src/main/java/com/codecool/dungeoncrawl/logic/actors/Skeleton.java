@@ -4,6 +4,8 @@ import com.codecool.dungeoncrawl.Utilities;
 import com.codecool.dungeoncrawl.logic.Cell;
 
 public class Skeleton extends Actor implements IFightable {
+    private boolean isFighting = false;
+
     public Skeleton(Cell cell) {
         super(cell);
         health = Utilities.SKELETON_HEALTH;
@@ -36,6 +38,21 @@ public class Skeleton extends Actor implements IFightable {
     @Override
     public int getMonsterStrikePower() {
         return strikePower;
+    }
+
+    @Override
+    public boolean getIsFighting() {
+        return isFighting;
+    }
+
+    @Override
+    public void setFighting() {
+        isFighting = true;
+    }
+
+    @Override
+    public void setNotFighting() {
+        isFighting = false;
     }
 }
 
