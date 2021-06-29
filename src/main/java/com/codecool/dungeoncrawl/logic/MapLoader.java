@@ -38,6 +38,10 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             new Ghost(cell);
                             break;
+                        case 'p':
+                            cell.setType(CellType.FLOOR);
+                            new Pitbull(cell);
+                            break;
                         case 'k':
                             cell.setType(CellType.FLOOR);
                             new Key(cell);
@@ -46,7 +50,7 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             new Sword(cell);
                             break;
-                        case 'I':
+                        case '|':
                             cell.setType(CellType.FLOOR);
                             new ClosedDoor(cell);
                             break;

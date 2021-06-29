@@ -19,16 +19,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.stage.Popup;
-import javafx.stage.PopupWindow;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 public class Main extends Application {
-//    private final int FONT_SIZE_LARGE = 24;
-//    private final int FONT_SIZE_MEDIUM = 20;
-//    private final int FONT_SIZE_SMALL = 18;
-
     GameMap map = MapLoader.loadMap();
     Canvas canvas = new Canvas(
             map.getWidth() * Tiles.TILE_WIDTH,
