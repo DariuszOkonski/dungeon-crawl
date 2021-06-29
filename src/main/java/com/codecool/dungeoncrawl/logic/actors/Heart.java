@@ -2,15 +2,13 @@ package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 
-public class Sword extends Actor implements ICollectable {
-    public Sword(Cell cell) {
+public class Heart extends Actor implements ICollectable {
+    public Heart(Cell cell) {
         super(cell);
     }
 
     @Override
     public String getTileName() {
-        return "sword";
+        return "heart";
     }
 }
-
-

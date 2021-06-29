@@ -34,7 +34,12 @@ public class Player extends Actor implements IMovable {
     }
 
     public void addToInventory() {
-        this.inventoryList.add((ICollectable) tempInventoryItem);
+        if(tempInventoryItem instanceof Heart) {
+            health += Utilities.EXTRA_HEALTH;
+        } else {
+            this.inventoryList.add((ICollectable) tempInventoryItem);
+        }
+
         tempInventoryItem = null;
         this.pickUpItemButton.setDisable(true);
     }
@@ -66,6 +71,8 @@ public class Player extends Actor implements IMovable {
         movingAroundTheBoardOnTheFloor(nextCell);
 
         canGoThroughDoor(nextCell);
+
+//        System.out.println(nextCell.getActor() instanceof Heart);
 
         isItemToCollect(nextCell);
 
@@ -206,7 +213,7 @@ public class Player extends Actor implements IMovable {
         alert.setContentText("You have no key in your inventory to get through");
         alert.showAndWait().ifPresent(rs -> {
             if (rs == ButtonType.OK) {
-                System.out.println("No Key");
+//                System.out.println("No Key");
             }
         });
     }
@@ -229,6 +236,9 @@ public class Player extends Actor implements IMovable {
 
             if(tempInventoryItem instanceof Key)
                 cell.setActor(new Key(cell));
+
+            if(tempInventoryItem instanceof Heart)
+                cell.setActor(new Heart(cell));
 
             nextCell.setActor(this);
             cell = nextCell;

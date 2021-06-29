@@ -80,6 +80,7 @@ public class Main extends Application {
             public void handle(ActionEvent event) {
                 map.getPlayer().addToInventory();
                 setInventoryItems();
+                refresh();
             }
         });
 

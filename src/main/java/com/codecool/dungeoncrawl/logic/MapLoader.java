@@ -48,6 +48,10 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             new Key(cell);
                             break;
+                        case 'h':
+                            cell.setType(CellType.FLOOR);
+                            new Heart(cell);
+                            break;
                         case 'f': // falchion -> also sword
                             cell.setType(CellType.FLOOR);
                             new Sword(cell);
