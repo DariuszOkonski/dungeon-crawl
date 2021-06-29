@@ -51,8 +51,14 @@ public class Ghost extends Actor implements IFightable, IMovable {
 
     @Override
     public void move(int dx, int dy) {
-        int numberOfmoves = ThreadLocalRandom.current().nextInt(0, 4);
-        for (int i = 0; i < numberOfmoves; i++) {
+        int specialMove = ThreadLocalRandom.current().nextInt(0, 10);
+
+        if(specialMove > 7) {
+            int numberOfmoves = ThreadLocalRandom.current().nextInt(10, 20);
+            for (int i = 0; i < numberOfmoves; i++) {
+                moveGhost();
+            }
+        } else {
             moveGhost();
         }
     }
