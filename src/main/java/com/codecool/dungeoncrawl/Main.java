@@ -44,59 +44,17 @@ public class Main extends Application {
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
 
-        Label healthText = new Label("Health: ");
-        healthText.setFont(new Font(Utilities.FONT_SIZE_LARGE));
-        healthText.setTextFill(Color.GREEN);
+        setHealthLabels(ui);
 
-        ui.add(healthText, 0, 0);
-        healthLabel.setFont(new Font(Utilities.FONT_SIZE_LARGE));
-        ui.add(healthLabel, 1, 0);
+        setHeroStrikePowerLabels(ui);
 
-        pickUpItemButton.setDisable(true);
-        pickUpItemButton.setText("Pick Up Item");
+        setPickUpItemButton(ui);
 
-        pickUpItemButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                map.getPlayer().addToInventory();
-                checkInventoryItems();
-            }
-        });
+        setEnemyHealthLabels(ui);
 
-        Label strikePowerText = new Label("Hero Strike Power: ");
-        strikePowerText.setFont(new Font(Utilities.FONT_SIZE_SMALL));
-        strikePowerText.setTextFill(Color.GREEN);
-        ui.add(strikePowerText, 0 , 2);
+        setEnemyStrikePowerLabels(ui);
 
-        strikePowerLabel.setText(getPlayerStrikePower());
-        strikePowerLabel.setFont(new Font(Utilities.FONT_SIZE_SMALL));
-        ui.add(strikePowerLabel, 1, 2);
-
-        ui.add(pickUpItemButton, 0, 3);
-
-        Label inventoryListText = new Label("Inventory List:");
-        inventoryListText.setFont(new Font(Utilities.FONT_SIZE_MEDIUM));
-        inventoryListText.setTextFill(Color.GREEN);
-
-        Label enemyHealthText = new Label("Enemy Health: ");
-        enemyHealthText.setFont(new Font(Utilities.FONT_SIZE_SMALL));
-        enemyHealthText.setTextFill(Color.RED);
-
-        ui.add(enemyHealthText, 0, 4);
-        enemyHealthLabel.setFont(new Font(Utilities.FONT_SIZE_SMALL));
-        ui.add(enemyHealthLabel, 1, 4);
-
-        Label enemyStrikePowerText = new Label("Enemy Strike Power: ");
-        enemyStrikePowerText.setFont(new Font(Utilities.FONT_SIZE_SMALL));
-        enemyStrikePowerText.setTextFill(Color.RED);
-        ui.add(enemyStrikePowerText, 0, 5);
-
-        enemyStrikePowerLabel.setFont(new Font(Utilities.FONT_SIZE_SMALL));
-        ui.add(enemyStrikePowerLabel, 1, 5);
-
-
-        ui.add(inventoryListText, 0, 6);
-        ui.add(inventoryList, 0, 7);
+        setInventoryListLabels(ui);
 
         map.getPlayer().addPickUpButton(pickUpItemButton, enemyHealthLabel, enemyStrikePowerLabel);
         BorderPane borderPane = new BorderPane();
@@ -111,6 +69,72 @@ public class Main extends Application {
 
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
+    }
+
+    private void setPickUpItemButton(GridPane ui) {
+        pickUpItemButton.setDisable(true);
+        pickUpItemButton.setText("Pick Up Item");
+
+        pickUpItemButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                map.getPlayer().addToInventory();
+                setInventoryItems();
+            }
+        });
+
+
+        ui.add(pickUpItemButton, 0, 3);
+    }
+
+    private void setInventoryListLabels(GridPane ui) {
+        Label inventoryListText = new Label("Inventory List:");
+        inventoryListText.setFont(new Font(Utilities.FONT_SIZE_MEDIUM));
+        inventoryListText.setTextFill(Color.GREEN);
+
+        ui.add(inventoryListText, 0, 6);
+        ui.add(inventoryList, 0, 7);
+    }
+
+    private void setEnemyStrikePowerLabels(GridPane ui) {
+        Label enemyStrikePowerText = new Label("Enemy Strike Power: ");
+        enemyStrikePowerText.setFont(new Font(Utilities.FONT_SIZE_SMALL));
+        enemyStrikePowerText.setTextFill(Color.RED);
+        ui.add(enemyStrikePowerText, 0, 5);
+
+        enemyStrikePowerLabel.setFont(new Font(Utilities.FONT_SIZE_SMALL));
+        ui.add(enemyStrikePowerLabel, 1, 5);
+    }
+
+    private void setEnemyHealthLabels(GridPane ui) {
+        Label enemyHealthText = new Label("Enemy Health: ");
+        enemyHealthText.setFont(new Font(Utilities.FONT_SIZE_SMALL));
+        enemyHealthText.setTextFill(Color.RED);
+
+        ui.add(enemyHealthText, 0, 4);
+        enemyHealthLabel.setFont(new Font(Utilities.FONT_SIZE_SMALL));
+        ui.add(enemyHealthLabel, 1, 4);
+    }
+
+    private void setHeroStrikePowerLabels(GridPane ui) {
+        Label strikePowerText = new Label("Hero Strike Power: ");
+        strikePowerText.setFont(new Font(Utilities.FONT_SIZE_SMALL));
+        strikePowerText.setTextFill(Color.GREEN);
+        ui.add(strikePowerText, 0 , 2);
+
+        strikePowerLabel.setText(getPlayerStrikePower());
+        strikePowerLabel.setFont(new Font(Utilities.FONT_SIZE_SMALL));
+        ui.add(strikePowerLabel, 1, 2);
+    }
+
+    private void setHealthLabels(GridPane ui) {
+        Label healthText = new Label("Health: ");
+        healthText.setFont(new Font(Utilities.FONT_SIZE_LARGE));
+        healthText.setTextFill(Color.GREEN);
+        ui.add(healthText, 0, 0);
+
+        healthLabel.setFont(new Font(Utilities.FONT_SIZE_LARGE));
+        ui.add(healthLabel, 1, 0);
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
@@ -173,7 +197,7 @@ public class Main extends Application {
             }
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
-        checkInventoryItems();
+        setInventoryItems();
         strikePowerLabel.setText(getPlayerStrikePower());
     }
 
@@ -181,7 +205,7 @@ public class Main extends Application {
         return Integer.toString(map.getPlayer().getStrikePower());
     }
 
-    private void checkInventoryItems() {
+    private void setInventoryItems() {
         var tempInventoryList = map.getPlayer().getInventoryList();
 
         String tempInventoryItems = "";
