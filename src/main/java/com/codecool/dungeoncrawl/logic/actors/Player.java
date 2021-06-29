@@ -186,8 +186,6 @@ public class Player extends Actor implements IMovable {
         }
 
         if(nextCell.getActor() instanceof ClosedDoor) {
-            System.out.println("CLOSED DOOR ===================");
-
             for (var key: inventoryList) {
                 if (key instanceof Key) {
                     inventoryList.remove(key);
@@ -238,15 +236,6 @@ public class Player extends Actor implements IMovable {
             this.pickUpItemButton.setDisable(true);
         }
     }
-
-//    private Cell getNextCell(int dx, int dy) {
-//        try {
-//            Cell nextCell = cell.getNeighbor(dx, dy);
-//            return nextCell;
-//        } catch (Exception ex) {
-//            return null;
-//        }
-//    }
 
     private boolean isHeroKilled() {
         return health <= 0;
