@@ -116,7 +116,6 @@ public class Player extends Actor implements IMovable {
                 nextCell.setActor(this);
                 cell = nextCell;
 
-                System.out.println(monster);
                 movableList.remove(monster);
 
                 resetUsingWeapon();
