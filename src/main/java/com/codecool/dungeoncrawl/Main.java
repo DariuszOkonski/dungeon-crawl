@@ -56,7 +56,7 @@ public class Main extends Application {
 
         setInventoryListLabels(ui);
 
-        map.getPlayer().addPickUpButton(pickUpItemButton, enemyHealthLabel, enemyStrikePowerLabel);
+        map.getPlayer().getElementsFromGameMap(pickUpItemButton, enemyHealthLabel, enemyStrikePowerLabel, map.getMovableList());
         BorderPane borderPane = new BorderPane();
 
         borderPane.setCenter(canvas);
@@ -161,8 +161,16 @@ public class Main extends Application {
                 break;
         }
 
+        moveEnemies();
+
         if(isEndGame()) {
             endGame();
+        }
+    }
+
+    private void moveEnemies() {
+        for (var monster: map.getMovableList()) {
+            monster.move(0, 0);
         }
     }
 

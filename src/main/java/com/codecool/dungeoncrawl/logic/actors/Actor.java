@@ -42,4 +42,13 @@ public abstract class Actor implements Drawable {
     protected boolean didCharacterHitTheWall(Cell nextCell) {
         return nextCell.getTileName() == CellType.WALL.getTileName();
     }
+
+    protected Cell getNextCell(int dx, int dy) {
+        try {
+            Cell nextCell = cell.getNeighbor(dx, dy);
+            return nextCell;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
 }

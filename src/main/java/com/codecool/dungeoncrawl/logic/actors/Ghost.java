@@ -3,6 +3,8 @@ package com.codecool.dungeoncrawl.logic.actors;
 import com.codecool.dungeoncrawl.Utilities;
 import com.codecool.dungeoncrawl.logic.Cell;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Ghost extends Actor implements IFightable, IMovable {
     private boolean isFighting = false;
 
@@ -15,14 +17,6 @@ public class Ghost extends Actor implements IFightable, IMovable {
     @Override
     public String getTileName() {
         return "ghost";
-    }
-
-    @Override
-    public String toString() {
-        return "Ghost{" +
-                "health=" + health +
-                ", strikePower=" + strikePower +
-                '}';
     }
 
     @Override
@@ -57,7 +51,46 @@ public class Ghost extends Actor implements IFightable, IMovable {
 
     @Override
     public void move(int dx, int dy) {
-        System.out.println("GHOST IS MOVING");
+        int numberOfmoves = ThreadLocalRandom.current().nextInt(0, 4);
+        for (int i = 0; i < numberOfmoves; i++) {
+            moveGhost();
+        }
+    }
+
+    private void moveGhost() {
+        int dy;
+        int dx;
+        if(!isFighting) {
+            dy = 0;
+            dx = ThreadLocalRandom.current().nextInt(-1, 2);
+
+            Cell nextCell = getNextCell(dx, dy);
+            while (nextCell.getActor() != null) {
+                dy = ThreadLocalRandom.current().nextInt(-1, 2);
+                dx = ThreadLocalRandom.current().nextInt(-1, 2);
+                nextCell = getNextCell(dx, dy);
+            }
+
+            // nextCell out of board
+            if(nextCell == null || nextCell instanceof IFightable)
+                return;
+
+            if(didCharacterHitTheWall(nextCell))
+                return;
+
+            cell.setActor(null);
+            nextCell.setActor(this);
+            cell = nextCell;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Ghost{" +
+                "health=" + health +
+                ", strikePower=" + strikePower +
+                ", isFighting=" + isFighting +
+                '}';
     }
 }
 

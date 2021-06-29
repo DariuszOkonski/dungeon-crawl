@@ -3,6 +3,8 @@ package com.codecool.dungeoncrawl.logic.actors;
 import com.codecool.dungeoncrawl.Utilities;
 import com.codecool.dungeoncrawl.logic.Cell;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Pitbull extends Actor implements IFightable, IMovable {
     private boolean isFighting = false;
 
@@ -49,6 +51,43 @@ public class Pitbull extends Actor implements IFightable, IMovable {
 
     @Override
     public void move(int dx, int dy) {
-        System.out.println("PITBULL IS MOVING ============");
+
+        movePitbull();
+    }
+
+    private void movePitbull() {
+        int dy;
+        int dx;
+        if(!isFighting) {
+            dy = 0;
+            dx = ThreadLocalRandom.current().nextInt(-1, 2);
+
+            Cell nextCell = getNextCell(dx, dy);
+            while (nextCell.getActor() != null) {
+                dy = ThreadLocalRandom.current().nextInt(-1, 2);
+                dx = ThreadLocalRandom.current().nextInt(-1, 2);
+                nextCell = getNextCell(dx, dy);
+            }
+
+            // nextCell out of board
+            if(nextCell == null || nextCell instanceof IFightable)
+                return;
+
+            if(didCharacterHitTheWall(nextCell))
+                return;
+
+            cell.setActor(null);
+            nextCell.setActor(this);
+            cell = nextCell;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Pitbull{" +
+                "health=" + health +
+                ", strikePower=" + strikePower +
+                ", isFighting=" + isFighting +
+                '}';
     }
 }

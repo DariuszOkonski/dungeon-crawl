@@ -36,11 +36,13 @@ public class MapLoader {
                             break;
                         case 'g':
                             cell.setType(CellType.FLOOR);
-                            new Ghost(cell);
+                            var ghost = new Ghost(cell);
+                            map.addToMoveableList(ghost);
                             break;
                         case 'p':
                             cell.setType(CellType.FLOOR);
-                            new Pitbull(cell);
+                            var pitbull = new Pitbull(cell);
+                            map.addToMoveableList(pitbull);
                             break;
                         case 'k':
                             cell.setType(CellType.FLOOR);

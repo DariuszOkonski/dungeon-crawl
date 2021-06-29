@@ -19,6 +19,7 @@ public class Player extends Actor implements IMovable {
     private Label enemyHealthLabel;
     private Label enemyStrikePowerLabel;
     private boolean isUsingWeapon = false;
+    private List<IMovable> movableList = null;
 
     public Player(Cell cell) {
         super(cell);
@@ -38,10 +39,11 @@ public class Player extends Actor implements IMovable {
         this.pickUpItemButton.setDisable(true);
     }
 
-    public void addPickUpButton(Button pickUpItem, Label enemyHealthLabel, Label enemyStrikePowerLabel) {
+    public void getElementsFromGameMap(Button pickUpItem, Label enemyHealthLabel, Label enemyStrikePowerLabel, List<IMovable> movableList) {
         this.pickUpItemButton = pickUpItem;
         this.enemyHealthLabel = enemyHealthLabel;
         this.enemyStrikePowerLabel = enemyStrikePowerLabel;
+        this.movableList = movableList;
     }
 
     public String getTileName() {
@@ -102,6 +104,7 @@ public class Player extends Actor implements IMovable {
                 }
             }
 
+            monster.setFighting();
             monster.subtractHealth(this.strikePower);
             this.subtractHealthFromHero(monster.getMonsterStrikePower());
             setEnemyLabels(Integer.toString(monster.getHealth()), Integer.toString(monster.getMonsterStrikePower()));
@@ -112,6 +115,9 @@ public class Player extends Actor implements IMovable {
                 cell.setActor(null);
                 nextCell.setActor(this);
                 cell = nextCell;
+
+                System.out.println(monster);
+                movableList.remove(monster);
 
                 resetUsingWeapon();
             }
@@ -234,14 +240,14 @@ public class Player extends Actor implements IMovable {
         }
     }
 
-    private Cell getNextCell(int dx, int dy) {
-        try {
-            Cell nextCell = cell.getNeighbor(dx, dy);
-            return nextCell;
-        } catch (Exception ex) {
-            return null;
-        }
-    }
+//    private Cell getNextCell(int dx, int dy) {
+//        try {
+//            Cell nextCell = cell.getNeighbor(dx, dy);
+//            return nextCell;
+//        } catch (Exception ex) {
+//            return null;
+//        }
+//    }
 
     private boolean isHeroKilled() {
         return health <= 0;
