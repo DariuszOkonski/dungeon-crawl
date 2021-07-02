@@ -2,7 +2,6 @@ package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.Utilities;
 import com.codecool.dungeoncrawl.logic.Cell;
-import net.bytebuddy.implementation.bind.annotation.IgnoreForBinding;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -11,75 +10,74 @@ import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class GhostTest {
-    private Ghost ghost; // SUT
-    private Cell cell; // mock
+class PitbullTest {
+    private Pitbull pitbull;
+    private Cell cell;
 
     @BeforeEach
     void setUp() {
         cell = Mockito.mock(Cell.class);
-        ghost = new Ghost(cell);
+        pitbull = new Pitbull(cell);
     }
 
     @Test
     void getTileName() {
-        var result = ghost.getTileName();
-        Assertions.assertEquals("ghost", result);
+        var result = pitbull.getTileName();
+        Assertions.assertEquals("pitbull", result);
     }
 
     @Test
     void isCharacterKilled() {
-        var result = ghost.isCharacterKilled();
+        var result = pitbull.isCharacterKilled();
         Assertions.assertEquals(false, result);
 
-        ghost.health = 0;
-        result = ghost.isCharacterKilled();
+        pitbull.health = 0;
+        result = pitbull.isCharacterKilled();
         Assertions.assertEquals(true, result);
     }
 
     @Test
     void subtractHealth() {
-        var health = ghost.getHealth();
-        Assertions.assertEquals(Utilities.GHOST_HEALTH, ghost.getHealth());
+        var result = pitbull.getHealth();
+        Assertions.assertEquals(Utilities.PITBULL_HEALTH, result);
 
-        ghost.subtractHealth(Utilities.HERO_STRIKE_POWER);
-
-        var expected = health - Utilities.HERO_STRIKE_POWER;
-        var result = ghost.getHealth();
-
+        pitbull.subtractHealth(Utilities.HERO_STRIKE_POWER);
+        result = pitbull.getHealth();
+        var expected = Utilities.PITBULL_HEALTH - Utilities.HERO_STRIKE_POWER;
         Assertions.assertEquals(expected, result);
     }
 
     @Test
     void getMonsterStrikePower() {
-        var result = ghost.getMonsterStrikePower();
-        Assertions.assertEquals(Utilities.GHOST_STRIKE_POWER, result);
+        var result = pitbull.getMonsterStrikePower();
+        var expected = Utilities.PITBULL_STRIKE_POWER;
+        Assertions.assertEquals(expected, result);
     }
 
     @Test
     void getIsFighting() {
-        var result = ghost.getIsFighting();
+        var result = pitbull.getIsFighting();
         Assertions.assertEquals(false, result);
     }
 
     @Test
     void setFighting() {
-        var isFighting = ghost.getIsFighting();
+        var isFighting = pitbull.getIsFighting();
         Assertions.assertEquals(false, isFighting);
 
-        ghost.setFighting();
-        isFighting = ghost.getIsFighting();
+        pitbull.setFighting();
+        isFighting = pitbull.getIsFighting();
         Assertions.assertEquals(true, isFighting);
     }
 
     @Test
     void setNotFighting() {
-        ghost.setFighting();
-        var isFighting = ghost.getIsFighting();
+        pitbull.setFighting();
+        var isFighting = pitbull.getIsFighting();
         Assertions.assertEquals(true, isFighting);
 
-        ghost.setNotFighting();
-        isFighting = ghost.getIsFighting();
+        pitbull.setNotFighting();
+        isFighting = pitbull.getIsFighting();
         Assertions.assertEquals(false, isFighting);
     }
 
@@ -90,8 +88,8 @@ class GhostTest {
 
     @Test
     void testToString() {
-        var result = ghost.toString();
-        var expected = "Ghost{health="+Utilities.GHOST_HEALTH+", strikePower="+Utilities.GHOST_STRIKE_POWER+", isFighting=false}";
+        var result = pitbull.toString();
+        var expected = "Pitbull{health="+Utilities.PITBULL_HEALTH+", strikePower="+Utilities.PITBULL_STRIKE_POWER+", isFighting=false}";
         Assertions.assertEquals(expected, result);
     }
 }
