@@ -89,7 +89,10 @@ class PitbullTest {
     @Test
     void testToString() {
         var result = pitbull.toString();
-        var expected = "Pitbull{health="+Utilities.PITBULL_HEALTH+", strikePower="+Utilities.PITBULL_STRIKE_POWER+", isFighting=false}";
+        var expected = "Pitbull{" +
+                "health="+Utilities.PITBULL_HEALTH+", " +
+                "strikePower="+Utilities.PITBULL_STRIKE_POWER+", " +
+                "isFighting="+false+"}";
         Assertions.assertEquals(expected, result);
     }
 }
