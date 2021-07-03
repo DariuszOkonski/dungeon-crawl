@@ -72,8 +72,6 @@ public class Player extends Actor implements IMovable {
 
         canGoThroughDoor(nextCell);
 
-//        System.out.println(nextCell.getActor() instanceof Heart);
-
         isItemToCollect(nextCell);
 
         setEnemyLabels("-", "-");
@@ -81,18 +79,14 @@ public class Player extends Actor implements IMovable {
         fightEnemy(nextCell);
 
 
-//        System.out.println(nextCell);
-//        System.out.println(nextCell.getActor() instanceof OpenedDoor);
 
     }
 
     private void fightEnemy(Cell nextCell) {
         if(nextCell.getActor() instanceof IFightable) {
-//            System.out.println("===========> fight");
 
             var monster = (IFightable) nextCell.getActor();
-//            System.out.println(monster);
-//            System.out.println(this);
+
 
             for (var sword: inventoryList) {
                 if(sword instanceof Sword && !isUsingWeapon) {
@@ -117,7 +111,6 @@ public class Player extends Actor implements IMovable {
             setEnemyLabels(Integer.toString(monster.getHealth()), Integer.toString(monster.getMonsterStrikePower()));
 
             if(monster.isCharacterKilled()){
-//                System.out.println("Enemy is dead");
                 setEnemyLabels("0", "-");
                 cell.setActor(null);
                 nextCell.setActor(this);
@@ -129,15 +122,11 @@ public class Player extends Actor implements IMovable {
             }
 
             if(this.isHeroKilled()) {
-//                System.out.println("You are dead");
                 health = 0;
                 cell.setActor(null);
             }
 
 
-//            System.out.println("===========> after hit");
-//            System.out.println(monster);
-//            System.out.println(this);
 
 
         }
