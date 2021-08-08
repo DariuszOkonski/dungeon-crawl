@@ -19,15 +19,6 @@ a lot by tabletop RPGs. Roguelikes have the following in common usually:
 Your task will be to create a roguelike! You can deviate from the rules above,
 the important bit is that it should be fun!
 
-## What are you going to learn?
-
-- Get more practice in OOP
-- Design patterns: layer separation (All of the game logic, i.e., player
-  movement, game rules, and so on), is in the `logic` package, completely
-  independent of user interface code. In principle, you could implement a
-  completely different interface e.g. terminal, web, Virtual Reality, etc. for
-  the same logic code.)
-
 ## Tasks
 
 1. Understand the existing code, classes and tests so you can make changes. You should do this before planning everything else. It will help you understand what is going on.
