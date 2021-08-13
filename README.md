@@ -1,3 +1,5 @@
+![image](src/img/main.jpg)
+
 # Dungeon Crawl (sprint 1)
 
 ## Story
